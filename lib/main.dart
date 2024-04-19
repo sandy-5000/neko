@@ -19,12 +19,36 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const HomePage(),
-      routes: {
-        '/home': (context) => const HomePage(),
-        '/trending': (context) => const TrendingPage(),
-        '/profile': (context) => const ProfilePage(),
-        '/setting': (context) => const SettingPage(),
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/home':
+            return _createRoute(const HomePage());
+          case '/trending':
+            return _createRoute(const TrendingPage());
+          case '/profile':
+            return _createRoute(const ProfilePage());
+          case '/setting':
+            return _createRoute(const SettingPage());
+          default:
+            return null;
+        }
       },
     );
   }
+}
+
+Route _createRoute(Widget page) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => page,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      var begin = const Offset(1.0, 0.0);
+      var end = Offset.zero;
+      var curve = Curves.easeInOutQuart;
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }

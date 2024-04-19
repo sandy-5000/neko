@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 Widget mainNavbar(BuildContext context) {
-  const iconSize = 20.0;
+  const iconSize = 25.0;
   const iconColor = Color.fromRGBO(255, 255, 255, 0.5);
   var width = MediaQuery.of(context).size.width;
   return ClipRRect(
@@ -18,7 +18,7 @@ Widget mainNavbar(BuildContext context) {
               Navigator.pushNamed(context, '/home');
             },
             icon: const Icon(
-              Icons.hub_outlined,
+              Icons.home_mini_outlined,
               color: iconColor,
               size: iconSize,
               textDirection: TextDirection.ltr,
@@ -30,7 +30,7 @@ Widget mainNavbar(BuildContext context) {
               Navigator.pushNamed(context, '/trending');
             },
             icon: const Icon(
-              Icons.hub_outlined,
+              Icons.animation_rounded,
               color: iconColor,
               size: iconSize,
               textDirection: TextDirection.ltr,
@@ -42,7 +42,7 @@ Widget mainNavbar(BuildContext context) {
               Navigator.pushNamed(context, '/profile');
             },
             icon: const Icon(
-              Icons.hub_outlined,
+              Icons.person_outline_rounded,
               color: iconColor,
               size: iconSize,
               textDirection: TextDirection.ltr,
@@ -54,7 +54,7 @@ Widget mainNavbar(BuildContext context) {
               Navigator.pushNamed(context, '/setting');
             },
             icon: const Icon(
-              Icons.hub_outlined,
+              Icons.settings,
               color: iconColor,
               size: iconSize,
               textDirection: TextDirection.ltr,
