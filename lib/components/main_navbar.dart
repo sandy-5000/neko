@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 Widget mainNavbar(BuildContext context) {
-  const iconSize = 20.0;
-  const iconColor = Color.fromRGBO(255, 255, 255, 0.5);
   var width = MediaQuery.of(context).size.width;
   return ClipRRect(
     borderRadius: BorderRadius.circular(10.0),
@@ -13,58 +11,39 @@ Widget mainNavbar(BuildContext context) {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IconButton(
-            onPressed: () {
-              navigate(context, '/home');
-            },
-            icon: const ImageIcon(
-              AssetImage('icons/home.png'),
-              color: iconColor,
-              size: iconSize,
-              semanticLabel: 'Home',
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              navigate(context, '/profile');
-            },
-            icon: const ImageIcon(
-              AssetImage('icons/profile.png'),
-              color: iconColor,
-              size: iconSize,
-              semanticLabel: 'Profile',
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              navigate(context, '/search');
-            },
-            icon: const ImageIcon(
-              AssetImage('icons/search.png'),
-              color: iconColor,
-              size: iconSize,
-              semanticLabel: 'Search',
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              navigate(context, '/about');
-            },
-            icon: const ImageIcon(
-              AssetImage('icons/about.png'),
-              color: iconColor,
-              size: iconSize,
-              semanticLabel: 'About',
-            ),
-          ),
+          _getIcon(context, 'Home', '/home', 'icons/home.png'),
+          _getIcon(context, 'Profile', '/profile', 'icons/profile.png'),
+          _getIcon(context, 'Search', '/search', 'icons/search.png'),
+          _getIcon(context, 'About', '/about', 'icons/about.png'),
         ],
       ),
     ),
   );
 }
 
-void navigate(BuildContext context, String routeName) {
+void _navigate(BuildContext context, String routeName) {
   if (ModalRoute.of(context)!.settings.name != routeName) {
     Navigator.pushNamed(context, routeName);
   }
+}
+
+Widget _getIcon(
+  BuildContext context,
+  String label,
+  String route,
+  String iconImage,
+) {
+  const iconSize = 20.0;
+  const iconColor = Color(0x88e2e8f0);
+  return IconButton(
+    onPressed: () {
+      _navigate(context, route);
+    },
+    icon: ImageIcon(
+      AssetImage(iconImage),
+      color: iconColor,
+      size: iconSize,
+      semanticLabel: label,
+    ),
+  );
 }
