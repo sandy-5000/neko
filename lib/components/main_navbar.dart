@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 Widget mainNavbar(BuildContext context) {
-  const iconSize = 25.0;
+  const iconSize = 20.0;
   const iconColor = Color.fromRGBO(255, 255, 255, 0.5);
   var width = MediaQuery.of(context).size.width;
   return ClipRRect(
@@ -9,60 +9,62 @@ Widget mainNavbar(BuildContext context) {
     child: Container(
       width: width * 0.9,
       padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 25.0),
-      color: const Color(0x22FFFFFF),
+      color: const Color(0x551e293b),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/home');
+              navigate(context, '/home');
             },
-            icon: const Icon(
-              Icons.home_mini_outlined,
+            icon: const ImageIcon(
+              AssetImage('icons/home.png'),
               color: iconColor,
               size: iconSize,
-              textDirection: TextDirection.ltr,
               semanticLabel: 'Home',
             ),
           ),
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/trending');
+              navigate(context, '/profile');
             },
-            icon: const Icon(
-              Icons.animation_rounded,
+            icon: const ImageIcon(
+              AssetImage('icons/profile.png'),
               color: iconColor,
               size: iconSize,
-              textDirection: TextDirection.ltr,
-              semanticLabel: 'Trending',
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/profile');
-            },
-            icon: const Icon(
-              Icons.person_outline_rounded,
-              color: iconColor,
-              size: iconSize,
-              textDirection: TextDirection.ltr,
               semanticLabel: 'Profile',
             ),
           ),
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/setting');
+              navigate(context, '/search');
             },
-            icon: const Icon(
-              Icons.settings,
+            icon: const ImageIcon(
+              AssetImage('icons/search.png'),
               color: iconColor,
               size: iconSize,
-              textDirection: TextDirection.ltr,
-              semanticLabel: 'Setting',
+              semanticLabel: 'Search',
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              navigate(context, '/about');
+            },
+            icon: const ImageIcon(
+              AssetImage('icons/about.png'),
+              color: iconColor,
+              size: iconSize,
+              semanticLabel: 'About',
             ),
           ),
         ],
       ),
     ),
   );
+}
+
+void navigate(BuildContext context, String routeName) {
+  if (ModalRoute.of(context)!.settings.name != routeName) {
+    Navigator.pushNamed(context, routeName);
+  }
 }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:neko/layouts/home_layout.dart';
 
-class SettingPage extends StatefulWidget {
-  const SettingPage({super.key});
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
   @override
-  State<SettingPage> createState() => _SettingPageState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
-class _SettingPageState extends State<SettingPage> {
+class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -18,7 +18,7 @@ class _SettingPageState extends State<SettingPage> {
         height: 300,
         alignment: Alignment.center,
         child: const Text(
-          "Setting Page",
+          "Search Page",
           style: TextStyle(
             fontSize: 18.0,
             color: Colors.white,

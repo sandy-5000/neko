@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:neko/layouts/home_layout.dart';
 
-class TrendingPage extends StatefulWidget {
-  const TrendingPage({super.key});
+class AboutPage extends StatefulWidget {
+  const AboutPage({super.key});
   @override
-  State<TrendingPage> createState() => _TrendingPageState();
+  State<AboutPage> createState() => _AboutPageState();
 }
 
-class _TrendingPageState extends State<TrendingPage> {
+class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -18,7 +18,7 @@ class _TrendingPageState extends State<TrendingPage> {
         height: 300,
         alignment: Alignment.center,
         child: const Text(
-          "Trending Page",
+          "About Page",
           style: TextStyle(
             fontSize: 18.0,
             color: Colors.white,

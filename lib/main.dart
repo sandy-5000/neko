@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:neko/pages/home_page.dart';
 import 'package:neko/pages/profile_page.dart';
-import 'package:neko/pages/setting_page.dart';
-import 'package:neko/pages/trending_page.dart';
+import 'package:neko/pages/about_page.dart';
+import 'package:neko/pages/search_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,12 +23,12 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/home':
             return _createRoute(const HomePage());
-          case '/trending':
-            return _createRoute(const TrendingPage());
+          case '/search':
+            return _createRoute(const SearchPage());
           case '/profile':
             return _createRoute(const ProfilePage());
-          case '/setting':
-            return _createRoute(const SettingPage());
+          case '/about':
+            return _createRoute(const AboutPage());
           default:
             return null;
         }
