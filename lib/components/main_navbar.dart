@@ -40,7 +40,7 @@ Widget _getIcon(
       _navigate(context, route);
     },
     icon: ImageIcon(
-      AssetImage(iconImage),
+      AssetImage('assets/$iconImage'),
       color: iconColor,
       size: iconSize,
       semanticLabel: label,
