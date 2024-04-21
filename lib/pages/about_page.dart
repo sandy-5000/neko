@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neko/components/text_wrapper.dart';
 import 'package:neko/layouts/home_layout.dart';
 
 class AboutPage extends StatefulWidget {
@@ -12,19 +13,12 @@ class _AboutPageState extends State<AboutPage> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     return homeLayout(
-      context,
-      Container(
+      context: context,
+      component: Container(
         width: width,
         height: 300,
         alignment: Alignment.center,
-        child: const Text(
-          "About Page",
-          style: TextStyle(
-            fontSize: 18.0,
-            color: Colors.white,
-            decoration: TextDecoration.none,
-          ),
-        ),
+        child: textNormal("About Page"),
       ),
     );
   }

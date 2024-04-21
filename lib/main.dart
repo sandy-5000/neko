@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:neko/pages/home_page.dart';
 import 'package:neko/pages/profile_page.dart';
 import 'package:neko/pages/about_page.dart';
 import 'package:neko/pages/search_page.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('data_cache');
   runApp(const MyApp());
 }
 
@@ -16,6 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'Montserrat',
         useMaterial3: true,
       ),
       home: const HomePage(),

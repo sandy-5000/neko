@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:neko/components/main_navbar.dart';
 
-Widget homeLayout(BuildContext context, Widget component) {
+Widget homeLayout({required BuildContext context, required Widget component}) {
   var width = MediaQuery.of(context).size.width;
   var height = MediaQuery.of(context).size.height;
   return Container(

@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:neko/services/cache.dart';
 
 class AnilistService {
   static const String _url = 'https://graphql.anilist.co';
@@ -255,11 +255,18 @@ class AnilistService {
 		''',
   };
 
-  static Future<void> fetcher(
-    String query,
-    Map<String, dynamic> variables,
-    Function callback,
-  ) async {
+  static Future<void> fetcher({
+    required String query,
+    required Map<String, dynamic> variables,
+    required Function callback,
+  }) async {
+    final key = "$query-${jsonEncode(variables)}";
+    final cache = Cache();
+    final cacheData = await cache.read(key);
+    if (cacheData != null) {
+      callback(cacheData);
+      return;
+    }
     final build = variables['build'];
     variables.remove('build');
 
@@ -278,6 +285,7 @@ class AnilistService {
       body: body,
     );
     final decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-    debugPrint(jsonEncode(decodedResponse));
+    cache.write(key, decodedResponse);
+    callback(decodedResponse);
   }
 }
