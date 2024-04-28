@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:neko/components/text_wrapper.dart';
 import 'package:neko/layouts/home_layout.dart';
 import 'package:neko/services/anilist.dart';
 
@@ -41,6 +40,8 @@ class _HomePageState extends State<HomePage> {
         return carouselImage(
           imagePath: carousel[index]['coverImage']['extraLarge'],
           active: index == _currentPage,
+          pageController: _pageController,
+          index: index,
         );
       },
     );
@@ -106,29 +107,49 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Widget carouselImage({imagePath, active}) {
+Widget carouselImage({
+  required String imagePath,
+  required bool active,
+  required PageController pageController,
+  required int index,
+}) {
   final double blur = active ? 30 : 0;
   final double offset = active ? 20 : 0;
-  final double top = active ? 50 : 70;
-  final double bottom = active ? 5 : 15;
-  return AnimatedContainer(
-    duration: const Duration(milliseconds: 300),
-    curve: Curves.decelerate,
-    margin: EdgeInsets.only(top: top, bottom: bottom, left: 10, right: 10),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-      image: DecorationImage(
-        scale: active ? 1.2 : 1.0,
-        fit: BoxFit.cover,
-        image: NetworkImage(imagePath),
-      ),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.white10,
-          blurRadius: blur,
-          offset: Offset(offset, offset),
-        )
-      ],
-    ),
+  final double top = active ? 30 : 50;
+  final double bottom = active ? 30 : 50;
+  const double side = 7;
+  return AnimatedBuilder(
+    animation: pageController,
+    builder: (context, child) {
+      double pageOffset = 0;
+      if (pageController.position.haveDimensions) {
+        pageOffset = (pageController.page ?? 0) - index;
+      }
+      return AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        curve: Curves.decelerate,
+        margin: EdgeInsets.only(
+          top: top,
+          bottom: bottom,
+          left: side,
+          right: side,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            fit: BoxFit.none,
+            image: NetworkImage(imagePath),
+            alignment: Alignment(pageOffset, 0),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white10,
+              blurRadius: blur,
+              offset: Offset(offset, offset),
+            )
+          ],
+        ),
+      );
+    },
   );
 }
