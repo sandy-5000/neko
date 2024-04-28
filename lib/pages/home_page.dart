@@ -54,13 +54,13 @@ class _HomePageState extends State<HomePage> {
       if (_pageController.page == carousel.length - 1) {
         _pageController.animateToPage(
           0,
-          duration: const Duration(milliseconds: 150),
-          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 1200),
+          curve: Curves.decelerate,
         );
       } else {
         _pageController.nextPage(
-          duration: const Duration(milliseconds: 150),
-          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 600),
+          curve: Curves.decelerate,
         );
       }
     });
@@ -112,8 +112,8 @@ Widget carouselImage({imagePath, active}) {
   final double top = active ? 50 : 70;
   final double bottom = active ? 5 : 15;
   return AnimatedContainer(
-    duration: const Duration(milliseconds: 150),
-    curve: Curves.easeInQuint,
+    duration: const Duration(milliseconds: 300),
+    curve: Curves.decelerate,
     margin: EdgeInsets.only(top: top, bottom: bottom, left: 10, right: 10),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(20),
