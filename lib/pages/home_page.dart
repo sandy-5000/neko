@@ -10,19 +10,37 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-final PageController _pageController = PageController(initialPage: 0);
 Timer? _timer;
 
 class _HomePageState extends State<HomePage> {
   dynamic carousel;
+  int _currentPage = 0;
+
+  final PageController _pageController = PageController(
+    initialPage: 0,
+    viewportFraction: 0.85,
+  );
+
+  _HomePageState() {
+    _currentPage = 0;
+    _pageController.addListener(() {
+      int next = (_pageController.page ?? 0).round();
+      if (_currentPage != next) {
+        setState(() {
+          _currentPage = next;
+        });
+      }
+    });
+  }
 
   Widget _getCarouselImages(dynamic carousel) {
     return PageView.builder(
       controller: _pageController,
       itemCount: carousel.length,
       itemBuilder: (context, index) {
-        return _CarouselImage(
+        return carouselImage(
           imagePath: carousel[index]['coverImage']['extraLarge'],
+          active: index == _currentPage,
         );
       },
     );
@@ -32,16 +50,16 @@ class _HomePageState extends State<HomePage> {
     if (_timer != null) {
       _timer?.cancel();
     }
-    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       if (_pageController.page == carousel.length - 1) {
         _pageController.animateToPage(
           0,
-          duration: const Duration(microseconds: 300),
+          duration: const Duration(milliseconds: 150),
           curve: Curves.easeInOut,
         );
       } else {
         _pageController.nextPage(
-          duration: const Duration(microseconds: 300),
+          duration: const Duration(milliseconds: 150),
           curve: Curves.easeInOut,
         );
       }
@@ -59,7 +77,7 @@ class _HomePageState extends State<HomePage> {
       },
       callback: (data) {
         setState(() {
-          carousel = data?['data']?['Page']?['media'];
+          carousel = data?['data']['Page']['media'];
           startTimer();
         });
       },
@@ -81,12 +99,6 @@ class _HomePageState extends State<HomePage> {
                     height: width,
                     child: _getCarouselImages(carousel),
                   ),
-            Container(
-              width: width,
-              height: 300,
-              alignment: Alignment.center,
-              child: textNormal("Home Page"),
-            ),
           ],
         ),
       ),
@@ -94,15 +106,29 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class _CarouselImage extends StatelessWidget {
-  final String imagePath;
-  const _CarouselImage({required this.imagePath});
-
-  @override
-  Widget build(BuildContext context) {
-    return Image.network(
-      imagePath,
-      fit: BoxFit.cover,
-    );
-  }
+Widget carouselImage({imagePath, active}) {
+  final double blur = active ? 30 : 0;
+  final double offset = active ? 20 : 0;
+  final double top = active ? 50 : 70;
+  final double bottom = active ? 5 : 15;
+  return AnimatedContainer(
+    duration: const Duration(milliseconds: 150),
+    curve: Curves.easeInQuint,
+    margin: EdgeInsets.only(top: top, bottom: bottom, left: 10, right: 10),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(20),
+      image: DecorationImage(
+        scale: active ? 1.2 : 1.0,
+        fit: BoxFit.cover,
+        image: NetworkImage(imagePath),
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.white10,
+          blurRadius: blur,
+          offset: Offset(offset, offset),
+        )
+      ],
+    ),
+  );
 }
